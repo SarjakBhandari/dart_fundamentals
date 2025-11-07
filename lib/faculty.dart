@@ -1,36 +1,78 @@
 class Faculty {
+  // parent class / base class
   final String firstName;
   final String lastName;
   final String department;
-  final double salary;
 
   Faculty({
     required this.firstName,
     required this.lastName,
-    required this.department, 
-    required this.salary}
-    );
+    required this.department,
+  });
 
-    void displayName(){
-      print("Name: $firstName");
-    }
-    void displaySalary(){
-      print("Salary: $salary");
-    }
+  void displayName() {
+    print("Name: $firstName");
+  }
 
-    double calculateAnnualSal(){
-      return 12 * salary;
-    }
+  void displaySalary() {
+    print("Salary: 0");
+  }
+
+  double calculateAnnualSal() {
+    return 0;
+  }
 }
 
-void main(){
-  Faculty faculty  = Faculty(firstName: "Anisha", lastName: "Sah", department: "UI/UX", salary: 45000);
-  Faculty faculty1 = Faculty(firstName: "Ravi", lastName: "Bhattarai", department: "QA intern", salary: 15000);
-  Faculty faculty2 = Faculty(firstName: "Sarjak", lastName: "Bhandari", department: "Backend", salary: 90000);
-  faculty.displayName();
-  faculty.displaySalary();
-  faculty1.displayName();
-  faculty1.displaySalary();
-  faculty2.displayName();
-  faculty2.displaySalary();
+class PartTimeFaculty extends Faculty {
+  final double hourlyRate;
+  final double hoursWorked;
+
+  PartTimeFaculty({
+    required super.firstName,
+    required super.lastName,
+    required super.department,
+    required this.hourlyRate,
+    required this.hoursWorked,
+  });
+  @override
+  double calculateAnnualSal() {
+    return 12 * this.hourlyRate * this.hoursWorked;
+  }
+}
+
+//child / derieved class
+class FullTimeFaculty extends Faculty {
+  final double salary;
+
+  FullTimeFaculty({
+    required super.firstName,
+    required super.lastName,
+    required super.department,
+    required this.salary,
+  });
+
+  // polymorphism -> many forms : method overriding
+  @override
+  double calculateAnnualSal() {
+    return 12 * this.salary;
+  }
+}
+
+void main() {
+  FullTimeFaculty faculty = FullTimeFaculty(
+    firstName: "Anisha",
+    lastName: "Sah",
+    department: "UI/UX",
+    salary: 45000,
+  );
+  PartTimeFaculty faculty1 = PartTimeFaculty(
+    firstName: "Ravi",
+    lastName: "Bhattarai",
+    department: "QA intern",
+    hourlyRate: 500,
+    hoursWorked: 5,
+  );
+
+  faculty.calculateAnnualSal();
+  faculty1.calculateAnnualSal();
 }
